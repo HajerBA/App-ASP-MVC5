@@ -1,0 +1,94 @@
+﻿@model System.Collections.Generic.IEnumerable<Wiky.Models.Commentaire>
+
+@using (Ajax.BeginForm("AddComment", new AjaxOptions
+{
+    UpdateTargetId = "Comment",
+    //OnSuccess = "$('#myModal').modal('hide');   setTimeout(doRefresh, 500); "
+}))
+{
+
+
+    @Html.Hidden("IdArt", (int)ViewBag.IDArt)
+
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"> Ajout Commentaire<span class="glyphicon glyphicon-plus"></span></button>
+
+
+    <!-- Modal -->
+    <div id="myModal"  aria-hidden="true" class="modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ajouter votre Commentaire</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <div> @Html.Label("Auteur : ") @Html.TextBox("Auteur") </div>
+                        <div> @Html.Label("Contenu : ") @Html.TextBox("Contenu") </div>
+                        <div> @Html.Label("Date : ") @Html.TextBox("DateCom") </div>
+                        <div><input type="submit" value="Valider" id="close_btnn" onclick="$('#myModal').modal('hide');  doRefresh(); " /></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default close" data-dismiss="modal" id="close_btn"   aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<h2>Liste des Commentaires</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            IDcom
+        </th>
+        <th>
+            Auteur
+        </th>
+        <th>
+            Contenu
+        </th>
+        <th>
+            Date de commentaire
+        </th>
+        <th>
+            Autre Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.IDCom
+            </td>
+            <td>
+                @item.Auteur
+            </td>
+            <td>
+                @item.Contenu
+            </td>
+            <td>
+                @item.DateCom
+            </td>
+            <td>
+
+                @* <a href="/Home/DeletCom?IdCom=@item.IDCom" class="glyphicon glyphicon-remove"></a>*@
+                @Ajax.ActionLink(" ", "DeletCom","Home",
+               new { IdCom=item.IDCom},
+               new AjaxOptions { UpdateTargetId = "Comment",
+                  
+               }, new { @class = "glyphicon glyphicon-remove" })
+
+
+
+            </td>
+
+        </tr>
+    }
+</table>

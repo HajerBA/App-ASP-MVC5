@@ -1,0 +1,82 @@
+﻿@model System.Collections.Generic.IEnumerable<Wiky.Models.Article>
+
+
+@{
+    /**/
+
+    ViewBag.Title = "List Article";
+}
+@using (Html.BeginForm())
+{
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchString" />
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+
+}
+
+
+<h2>ListArticle</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IDArt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Theme)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Auteur)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Contenu)
+        </th>
+        <th>
+            Nombre des commentaire
+        </th>
+        <th>
+            Autre Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDArt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Theme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Auteur)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contenu)
+            </td>
+
+            <td>@item.Commentaire.Count</td>
+            <td>
+                <a href="/Home/Detail?IDArt=@item.IDArt">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                </a>
+                <a href="/Home/UpdatArt?IDArt=@item.IDArt">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                @*@Html.ActionLink("", "DeletArt", "Home", new { IDArt = item.IDArt }, null)*@
+                <a href="/Home/DeletArt?IDArt=@item.IDArt">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+
+            </td>
+
+        </tr>
+    }
+</table>
+
+
